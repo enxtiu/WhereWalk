@@ -1,6 +1,3 @@
-def main():
-    pass
+from .config import *
 
-
-if __name__ == '__main__':
-    pass
+__all__ = ['load_config', 'Config']
