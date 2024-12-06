@@ -1,0 +1,41 @@
+version: 1
+disable_existing_loggers: False
+
+formatters:
+  default:
+    format: '#{levelname:8} {name}: {funcName} - {message}'
+    style: '{'
+  formatter_1:
+    format: '[{asctime}] #{levelname:8} {filename}: {lineno} - {funcName} -> {message}'
+    style: '{'
+
+filters:
+
+  debug_info_filter:
+    (): loggers_filter.DebugInfoLogFilter
+  warning_error_critical_filter:
+    (): loggers_filter.WarningErrorCritical
+
+handlers:
+
+  default:
+    class: logging.StreamHandler
+    formatters: default
+    filters: [debug_info_filter]
+
+  file:
+    class: logging.FileHandler
+    filename: war_err_crit.log
+    mode: a
+    encoding: utf-8
+    formatters: formatter_1
+    filters: [warning_error_critical_filter]
+
+loggers:
+  app.tg_bot.template.tg_bot:
+    handlers: [file]
+
+root:
+  level: DEBUG
+  formatters: default
+  handlers: [default]

@@ -20,6 +20,7 @@ def load_config() -> Config:
 
     load_dotenv(find_dotenv())
 
+    logger.info('return config')
     return Config(tg_bot=TgBot(token=os.getenv('TOKEN')))
 
 if __name__ == '__main__':
