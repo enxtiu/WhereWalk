@@ -3,6 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher
 
 from app.tg_bot_template.config_data.config import load_config, Config
+from app.tg_bot_template.keyboards.set_menu import set_command
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +15,9 @@ async def main() -> None:
     bot = Bot(token=config.tg_bot.token)
     dp = Dispatcher()
 
+    await set_command(bot)
+    logger.info('register my command')
+    dp.startup.register(set_command)
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, allowed_updates=[])
