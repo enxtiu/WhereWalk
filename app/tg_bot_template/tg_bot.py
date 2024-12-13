@@ -2,7 +2,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 
-from app.tg_bot_template.config_data.config import load_config, Config
+from app.tg_bot_template.configs.config import load_config, Config
 from app.tg_bot_template.keyboards.set_menu import set_command
 from app.tg_bot_template.handlers import users_handl, echo_handl
 
