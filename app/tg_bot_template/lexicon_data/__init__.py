@@ -1,6 +1,4 @@
-def main():
-    pass
+from .lexicon_en import *
+from .lexicon_ru import *
 
-
-if __name__ == '__main__':
-    pass
+__all__ = ['LEXICON_EN', 'LEXICON_RU', 'widget_en', 'widget_ru']
