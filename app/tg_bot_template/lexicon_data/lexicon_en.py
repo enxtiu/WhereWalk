@@ -81,9 +81,9 @@ This bot is designed to make your life easier and more convenient by providing u
 def widget_en(*args) -> str:
     result = f"""Place name: {args[0]}
 <b>Place description<b>: {args[1]}
-⭐ <b>Rating on yandex map<b>: rating - <a href={args[2]}>Learn more about reviews</a>
-📍 <b>Address<b>: {args[3]}
-Opening hours: {args[4]}
-Contacts: {args[5]}
-<a href={args[6]}>Learn more</a>"""
+⭐ <b>Rating on yandex map<b>: {args[2]} - <a href={args[3]}>Learn more about reviews</a>
+📍 <b>Address<b>: {args[4]}
+Opening hours: {args[5]}
+Contacts: {args[6]}
+<a href={args[7]}>Learn more</a>"""
     return result
