@@ -5,7 +5,6 @@ from aiogram import Bot, Dispatcher
 from app.tg_bot_template.configs.config import load_config, Config
 from app.tg_bot_template.keyboards.set_menu import set_command
 from app.tg_bot_template.handlers import users_handl, echo_handl
-from app.tg_bot_template.data_base.model import list_all_table
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +22,7 @@ async def main() -> None:
 
     dp.include_router(users_handl.router)
     dp.include_router(echo_handl.router)
+
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, allowed_updates=[])
     logger.info('Start polling')
