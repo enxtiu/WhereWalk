@@ -1,4 +1,4 @@
-LEXICON_EN = {
+LEXICON = {
 '/start': """
 Hello! I am your personal guide and assistant for recommendations of places. I will help you find the best restaurants, cafes, parks, museums and other interesting places. If you like a place, you can save it to your favorites so that you don't forget it.
 
@@ -15,10 +15,10 @@ If you want to find out more information about my functionality, author, or priv
 Shall we start? Just click on continue and I'll pick the best options for you!
 ps: Unfortunately some functionality is not available yet, so it will be crossed out, but I hope it will be available soon) """,
     'menu_des': {
-    'description': "<b>Description of the bot's capabilities</b>",
-    'author': '<b>Tech support</b>',
-    'politic': '<b>Privacy Policy</b>',
-    'favorites': '<b>Selected establishments</b>'},
+    'description': "Description of the bot's capabilities",
+    'author': 'Tech support',
+    'politic': 'Privacy Policy',
+    'favorites': 'Selected establishments'},
 
     '/description': """<b>Description of the bot</b>
 This bot was created to help users find interesting places and save them to favorites.
@@ -78,7 +78,7 @@ This bot is designed to make your life easier and more convenient by providing u
     'data_requests_filter': 'Choose the type of establishments you are interested in 👇'
 }
 
-def widget_en(*args) -> str:
+def widget(*args) -> str:
     result = f"""Place name: {args[0]}
 <b>Place description<b>: {args[1]}
 ⭐ <b>Rating on yandex map<b>: {args[2]} - <a href={args[3]}>Learn more about reviews</a>

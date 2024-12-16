@@ -11,8 +11,8 @@ router: Router = Router()
 
 
 @router.message(filters.CommandStart())
-async def get_start(message: types.Message) -> None:
-    await message.answer(text=..., reply_markup=keyboard_st)
+async def get_start(message: types.Message, i18n) -> None:
+    await message.answer(text=i18n.LEXICON['/start'], reply_markup=keyboard_st)
 
 @router.callback_query(F.data == 'watch')
 async def call_watch(callback: types.CallbackQuery) -> None:

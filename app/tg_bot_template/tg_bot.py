@@ -1,6 +1,8 @@
 import logging
 
 from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
 
 from app.tg_bot_template.configs.config import load_config, Config
 from app.tg_bot_template.keyboards.set_menu import set_command
@@ -13,7 +15,7 @@ async def main() -> None:
     config: Config = load_config()
 
     logger.info('Init token bot')
-    bot = Bot(token=config.tg_bot.token)
+    bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
 
     await set_command(bot)
