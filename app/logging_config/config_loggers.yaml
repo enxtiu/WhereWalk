@@ -25,17 +25,15 @@ handlers:
 
   war_err_crit_file:
     class: logging.FileHandler
-    filename: war_err_crit.log
-    mode: a
+    filename: C:/Users/Redmi/Log/war_err_crit.log
+    mode: w
     encoding: utf-8
+    level: WARNING
     formatter: formatter_1
     filters: [warning_error_critical_filter]
 
-loggers:
-  app.tg_bot.template.tg_bot:
-    handlers: [war_err_crit_file]
 
 root:
   level: DEBUG
   formatter: default
-  handlers: [stderr]
+  handlers: [stderr, war_err_crit_file]

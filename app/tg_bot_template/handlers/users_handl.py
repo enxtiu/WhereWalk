@@ -14,13 +14,5 @@ router: Router = Router()
 async def get_start(message: types.Message, i18n) -> None:
     await message.answer(text=i18n.LEXICON['/start'], reply_markup=keyboard_st)
 
-@router.callback_query(F.data == 'watch')
-async def call_watch(callback: types.CallbackQuery) -> None:
-    logger.info('Call watch')
-    await callback.message.edit_text(text=..., reply_markup=keyboard_vid)
 
-@router.callback_query()
-async def all_call(callback: types.CallbackQuery) -> None:
-    logger.info('Call any')
-    await callback.answer()
 
