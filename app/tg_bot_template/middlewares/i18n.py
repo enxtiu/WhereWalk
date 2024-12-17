@@ -16,7 +16,7 @@ class TranslatorMiddleware[T](BaseMiddleware):
             event: TelegramObject,
             data: dict[str, T]
     ) -> T:
-
+        logger.debug(f'{data}')
         user: User = data.get('event_from_user')
 
 
