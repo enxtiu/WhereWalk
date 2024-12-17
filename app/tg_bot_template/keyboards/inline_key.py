@@ -1,36 +1,24 @@
 import logging
 
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import User
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+
+from callback_factory import CallbackFactory
 
 logger = logging.getLogger(__name__)
 
-button = [InlineKeyboardButton(
-    text='Посмотреть',
-    callback_data='watch'
-)]
-logger.info('Init keyboard_st')
-keyboard_st = InlineKeyboardMarkup(inline_keyboard=[button])
+def inline_keyboard(user: User, time: int, *args: str, sizes: tuple[int, ...] = (1,)) -> InlineKeyboardBuilder:
 
-buttons = [
-    [
-        InlineKeyboardButton(
-            text='next',
-            callback_data='next_vid'
+    build = InlineKeyboardBuilder()
+    for item in args:
+        build.button(
+            text=item,
+            callback_data=CallbackFactory(
+                user_id=user.id,
+                data=item,
+                timestamp=time
+            )
         )
-    ],
-    [
-        InlineKeyboardButton(
-            text='add favourites',
-            callback_data='add_vid'
-        )
-    ],
-    [
-            InlineKeyboardButton(
-            text='back',
-            callback_data='back_vid'
-        )
-    ]
-]
 
-logger.info('Init keyboard_vid')
-keyboard_vid = InlineKeyboardMarkup(inline_keyboard=buttons)
+    build.adjust(*sizes)
+    return build

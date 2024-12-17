@@ -15,6 +15,7 @@ If you want to find out more information about my functionality, author, or priv
 Shall we start? Just click on continue and I'll pick the best options for you!
 ps: Unfortunately some functionality is not available yet, so it will be crossed out, but I hope it will be available soon) """,
     'menu_des': {
+    'start': 'restart bot',
     'description': "Description of the bot's capabilities",
     'author': 'Tech support',
     'politic': 'Privacy Policy',
