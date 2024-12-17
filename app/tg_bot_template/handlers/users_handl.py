@@ -1,7 +1,7 @@
 import logging
-from datetime import datetime
 
 from aiogram import types, filters, Router
+
 from app.tg_bot_template.keyboards.inline_key import inline_keyboard
 
 logger = logging.getLogger(__name__)
@@ -38,6 +38,7 @@ async def get_author(message: types.Message, i18n) -> None:
     logger.debug('init get_author')
 
     await message.answer(text=i18n.LEXICON['/author'])
+
 
 @router.message(filters.Command(commands='politic'))
 async def get_politic(message: types.Message, i18n) -> None:

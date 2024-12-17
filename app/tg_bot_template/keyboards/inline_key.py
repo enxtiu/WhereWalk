@@ -15,10 +15,9 @@ def inline_keyboard(user: User, sizes: tuple[int, ...] = (1,), **kwargs: str) ->
             text=value,
             callback_data=CallbackFactory(
                 user_id=user.id,
-                data=key,
+                data_call=key,
             ).pack()
         )
-
     build.adjust(*sizes)
-    logger.debug('return build')
+    logger.info('return build')
     return build
