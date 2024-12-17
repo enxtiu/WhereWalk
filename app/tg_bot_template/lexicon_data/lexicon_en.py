@@ -44,17 +44,6 @@ The bot can plot a route to a selected location by providing step-by-step instru
 
 👉 Helps you get to your destination in the most convenient and fastest way.
 
-<u>Advantages of using a bot:</u>
-<b>Convenience: The bot is available at any time and can help you in any situation.
-
-<b>Personalization: The bot takes into account your preferences and interests to provide the most relevant recommendations and information.
-
-<b>Efficiency</b>: Quick access to information and recommendations saves time and effort.
-
-<b>Interactivity: The bot supports dialogue and can adapt to your requests and needs.
-
-This bot is designed to make your life easier and more convenient by providing useful information and recommendations at any time.
-
 <u>Summary of the functionality</u>:
 1. The continue button leads to the most detailed instructions
 2. There are three types of filtration
@@ -65,7 +54,7 @@ This bot is designed to make your life easier and more convenient by providing u
 7. You can view the establishments by clicking on the command in the menu: Favorites
 8. When you click on the place name, a widget with the place will open
 9. Edit - delete places""",
-    '/author': "Developer: @enxteu_1, github: @enxtiu.\ If you have questions or not about the bot's work, write to tg",
+    '/author': "Developer: @enxteu_1, github: @enxtiu. If you have questions or not about the bot's work, write to tg",
     '/politic': 'It will be later)',
     'keyboard': {
 'next': 'Continue',
