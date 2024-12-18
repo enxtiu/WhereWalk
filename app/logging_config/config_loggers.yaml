@@ -12,9 +12,9 @@ formatters:
 filters:
 
   debug_info_filter:
-    (): logging_config.loggers_filter.DebugInfoLogFilter
+    (): app.logging_config.loggers_filter.DebugInfoLogFilter
   warning_error_critical_filter:
-    (): logging_config.loggers_filter.WarningErrorCritical
+    (): app.logging_config.loggers_filter.WarningErrorCritical
 
 handlers:
 
