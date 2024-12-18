@@ -1,6 +1,6 @@
-def main():
-    pass
+import logging
 
+logger = logging.getLogger(__name__)
 
-if __name__ == '__main__':
-    pass
+_info_list = [i for i in range(1, 11)]
+count_info_list = {i: _info_list for i in range(1, 11)}

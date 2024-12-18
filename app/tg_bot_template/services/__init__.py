@@ -1,6 +1,3 @@
-def main():
-    pass
+from .servis import *
 
-
-if __name__ == '__main__':
-    pass
+__all__ = ['count_info_list']

@@ -1,11 +1,10 @@
 import logging
-from itertools import repeat
 
 from aiogram import Router, types, F
 
 from app.tg_bot_template.keyboards.callback_factory import CallbackFactory
 from app.tg_bot_template.keyboards.inline_key import inline_keyboard
-
+from app.tg_bot_template.services.servis import count_info_list
 logger = logging.getLogger(__name__)
 
 router: Router = Router()
@@ -46,9 +45,24 @@ async def call_requests_filter(callback: types.CallbackQuery, i18n, event_from_u
 
 @router.callback_query(CallbackFactory.filter('cancel' == F.data_call))
 async def call_cancel(callback: types.CallbackQuery, i18n, event_from_user: types.User):
-    await call_next(callback, i18n, event_from_user)
+    if callback.message.text != 'Вернуться':
+        await call_next(callback, i18n, event_from_user)
+    else:
+        logger.warning(
+            f'Пользователь {event_from_user.first_name, event_from_user.id} нажимает множество раз подряд на {callback.message.text}'
+        )
+        await callback.answer(text=i18n.LEXICON['exp_buttons'], show_alert=True)
 
 @router.callback_query(CallbackFactory.filter('random' == F.data_call))
-async def call_random(callback: types.CallbackQuery) -> None:
+async def call_random(callback: types.CallbackQuery, i18n, event_from_user: types.User) -> None:
     logger.debug('init call_random')
-    await callback.answer(text='12345')
+
+    buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
+
+    build = inline_keyboard(
+        event_from_user,
+        (3,),
+        **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
+    )
+    logger.debug(f'{i18n.widget(*count_info_list[1])}{build.as_markup()}')
+    await callback.message.edit_text(text=i18n.widget(*count_info_list[1]), reply_markup=build.as_markup())
