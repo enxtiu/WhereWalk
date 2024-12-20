@@ -8,6 +8,7 @@ from app.tg_bot_template.configs.config import load_config, Config
 from app.tg_bot_template.handlers import users_handl, echo_handl, call_filter_users_handl
 from app.tg_bot_template.keyboards.set_menu import set_command
 from app.tg_bot_template.middlewares.i18n import TranslatorMiddleware
+from app.tg_bot_template.data_base.orm import insert_data_base, delete_data_base_filed, update_data_base
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,13 @@ async def main() -> None:
     bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
 
-    dp.workflow_data.update(_translation=config.translation.values, data_vid=config.data_vid)
+    dp.workflow_data.update(
+        _translation=config.translation.values,
+        data_vid=config.data_vid,
+        insert_base=insert_data_base,
+        delete_base=delete_data_base_filed,
+        update_base=update_data_base
+    )
 
     await set_command(bot)
     logger.info('register my command')

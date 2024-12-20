@@ -22,15 +22,35 @@ async def call_next(callback: types.CallbackQuery, i18n, event_from_user: types.
     )
     await callback.message.edit_text(text=i18n.LEXICON['call_next'], reply_markup=build.as_markup())
 
+@router.callback_query(CallbackFactory.filter('next_web' == F.data_call))
+async def call_requests_detailed_filter(callback: types.CallbackQuery, event_from_user, i18n):
+    if callback.message.text != '❌ Продолжить в веб.версии':
+        await callback.answer(text=i18n.LEXICON['not_func'], show_alert=True)
+    else:
+        logger.warning(
+            f'Пользователь {event_from_user.first_name, event_from_user.id} нажимает множество раз подряд на {callback.message.text}'
+        )
+        await callback.answer(text=i18n.LEXICON['exp_buttons'], show_alert=True)
+
+@router.callback_query(CallbackFactory.filter('detailed_filter' == F.data_call))
+async def call_requests_detailed_filter(callback: types.CallbackQuery, event_from_user, i18n):
+    if callback.message.text != '❌ Подробная фильтрации':
+        await callback.answer(text=i18n.LEXICON['not_func'], show_alert=True)
+    else:
+        logger.warning(
+            f'Пользователь {event_from_user.first_name, event_from_user.id} нажимает множество раз подряд на {callback.message.text}'
+        )
+        await callback.answer(text=i18n.LEXICON['exp_buttons'], show_alert=True)
 
 @router.callback_query(CallbackFactory.filter('requests_filter' == F.data_call))
 async def call_requests_filter(callback: types.CallbackQuery, i18n, event_from_user: types.User) -> None:
     if callback.message.text != 'Фильтрации по виду заведения':
         logger.debug('init call requests filter')
 
-        buttons = list(i18n.LEXICON.get('keyboard'))[7:]
+        buttons = list(i18n.LEXICON.get('keyboard'))[7:12]
         button_cancel = ''.join(list(i18n.LEXICON.get('keyboard'))[6])
         buttons += [button_cancel]
+        logger.debug('init buttons')
 
         build = inline_keyboard(
             event_from_user,
@@ -60,6 +80,7 @@ async def call_random(callback: types.CallbackQuery, i18n, event_from_user: type
 
     buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
 
+
     build = inline_keyboard(
         event_from_user,
         (3,),
@@ -67,3 +88,18 @@ async def call_random(callback: types.CallbackQuery, i18n, event_from_user: type
     )
     logger.debug(f'{i18n.widget(*count_info_list[1])}{build.as_markup()}')
     await callback.message.edit_text(text=i18n.widget(*data_vid.sheet_all[0]), reply_markup=build.as_markup())
+
+@router.callback_query()
+async def call_whe(): ...
+
+@router.callback_query()
+async def call_prod(): ...
+
+@router.callback_query()
+async def call_apt(): ...
+
+@router.callback_query()
+async def call_con(): ...
+
+@router.callback_query()
+async def call_gost(): ...
