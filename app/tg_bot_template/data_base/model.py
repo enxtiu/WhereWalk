@@ -12,6 +12,7 @@ def list_all_table(name_db: str, name_line: str, name_table: str, if_: str='') -
                 cursor = connection.cursor()
                 cursor.execute(f'SELECT {name_line} FROM {name_table}{if_}')
                 connection.commit()
+                logger.debug('return cursor')
                 return cursor.fetchall()
 
         except Exception as e:
@@ -24,12 +25,13 @@ def list_all_table(name_db: str, name_line: str, name_table: str, if_: str='') -
 
 
 favourites_places = """IF NOT EXISTS favourites_places (
-name_place TEXT NOT NULL UNIQUE,
-info TEXT NOT NULL UNIQUE,
-user_id INTEGER
+name_place TEXT NOT NULL,
+info TEXT NOT NULL,
+user_id INTEGER NOT NULL
 )"""
 
 users_page = """IF NOT EXISTS users_page (
 user_id INTEGER NOT NULL UNIQUE,
-page INTEGER NOT NULL UNIQUE
+page INTEGER NOT NULL,
+category TEXT NOT NULL
 )"""

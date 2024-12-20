@@ -22,4 +22,18 @@ sh_whe = set(tuple(Data().whe[y][x].value for x in range(8)) for y in range(2, 9
 
 sh_con = set(tuple(Data().con[y][x].value for x in range(8) )for y in range(2, 3))
 
+def find_category(function, user) -> str:
+
+    all_table = function(
+        'base',
+        '*',
+        'users_page',
+    )
+    logger.debug(f'{all_table}')
+    for i in all_table:
+        logger.debug(f'{user.id}')
+        if user.id == i[0]:
+            logger.debug(f'{i, i[2]}')
+            return i[2]
+
 

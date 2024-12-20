@@ -16,9 +16,10 @@ router: Router = Router()
 async def call_next(callback: types.CallbackQuery, i18n, event_from_user: types.User) -> None:
     logger.debug('init call_next')
     buttons = list(i18n.LEXICON.get('keyboard'))[2:5]
+    buttons += [''.join(list(i18n.LEXICON.get('keyboard'))[7])]
     build = inline_keyboard(
         event_from_user,
-        (1, 1, 1),
+        (1, 1, 1, 1),
         **{k: i18n.LEXICON.get('keyboard')[k] for k in buttons}
     )
     await callback.message.edit_text(text=i18n.LEXICON['call_next'], reply_markup=build.as_markup())
@@ -49,7 +50,7 @@ async def call_requests_filter(callback: types.CallbackQuery, i18n, event_from_u
     if callback.message.text != 'Фильтрации по виду заведения':
         logger.debug('init call requests filter')
 
-        buttons = list(i18n.LEXICON.get('keyboard'))[7:12]
+        buttons = list(i18n.LEXICON.get('keyboard'))[8:13]
         button_cancel = ''.join(list(i18n.LEXICON.get('keyboard'))[6])
         buttons += [button_cancel]
         logger.debug('init buttons')
@@ -89,7 +90,8 @@ async def call_random(
 ) -> None:
     logger.debug('init call_random')
 
-    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    insert_base('base', "users_page (user_id, page, category) VALUES (?, ?, ?)", int(event_from_user.id), 0, 'all')
+
     logger.debug(f'{list_all_table('base', '*', 'users_page')}')
 
     buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
@@ -111,7 +113,8 @@ async def call_whe(
 ) -> None:
     logger.debug('init_call_whe')
 
-    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    insert_base('base', "users_page (user_id, page, category) VALUES (?, ?, ?)", int(event_from_user.id), 0, 'whe')
+
     logger.debug(f'{list_all_table('base', '*', 'users_page')}')
 
     buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
@@ -135,7 +138,8 @@ async def call_prod(
 ) -> None:
     logger.debug('init_call_prod')
 
-    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    insert_base('base', "users_page (user_id, page, category) VALUES (?, ?, ?)", int(event_from_user.id), 0, 'prod')
+
     logger.debug(f'{list_all_table('base', '*', 'users_page')}')
 
     buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
@@ -158,7 +162,8 @@ async def call_apt(
 ) -> None:
     logger.debug('init_call_apt')
 
-    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    insert_base('base', "users_page (user_id, page, category) VALUES (?, ?, ?)", int(event_from_user.id), 0, 'apt')
+
     logger.debug(f'{list_all_table('base', '*', 'users_page')}')
 
     buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
@@ -167,7 +172,7 @@ async def call_apt(
         (3, 1, 1),
         **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
     )
-
+    logger.debug(f'{data_vid.sheet_apt}')
     await callback.message.edit_text(text=i18n.widget(*list(data_vid.sheet_apt)[0]), reply_markup=build.as_markup())
 
 
@@ -181,7 +186,8 @@ async def call_con(
 ) -> None:
     logger.debug('init_call_con')
 
-    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    insert_base('base', "users_page (user_id, page, category) VALUES (?, ?, ?)", int(event_from_user.id), 0, 'con')
+
     logger.debug(f'{list_all_table('base', '*', 'users_page')}')
 
     buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
@@ -203,7 +209,8 @@ async def call_gost(
 ) -> None:
     logger.debug('init_call_gost')
 
-    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+
+    insert_base('base', "users_page (user_id, page, category) VALUES (?, ?, ?)", int(event_from_user.id), 0, 'gost')
     logger.debug(f'{list_all_table('base', '*', 'users_page')}')
 
     buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
