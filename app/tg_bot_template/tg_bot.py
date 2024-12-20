@@ -19,6 +19,8 @@ async def main() -> None:
     bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
 
+    dp.workflow_data.update(_translation=config.translation.values)
+
     await set_command(bot)
     logger.info('register my command')
     dp.startup.register(set_command)
@@ -30,7 +32,6 @@ async def main() -> None:
     dp.update.middleware(TranslatorMiddleware())
 
     logger.info('init workflow_data')
-    dp.workflow_data.update(_translation=config.translation.values)
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, allowed_updates=[])
     logger.info('Start polling')

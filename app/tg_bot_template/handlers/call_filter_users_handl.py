@@ -5,6 +5,7 @@ from aiogram import Router, types, F
 from app.tg_bot_template.keyboards.callback_factory import CallbackFactory
 from app.tg_bot_template.keyboards.inline_key import inline_keyboard
 from app.tg_bot_template.services.servis import count_info_list
+from app.tg_bot_template.configs.config import DataVid
 logger = logging.getLogger(__name__)
 
 router: Router = Router()
@@ -54,7 +55,7 @@ async def call_cancel(callback: types.CallbackQuery, i18n, event_from_user: type
         await callback.answer(text=i18n.LEXICON['exp_buttons'], show_alert=True)
 
 @router.callback_query(CallbackFactory.filter('random' == F.data_call))
-async def call_random(callback: types.CallbackQuery, i18n, event_from_user: types.User) -> None:
+async def call_random(callback: types.CallbackQuery, i18n, event_from_user: types.User, data_vid: DataVid) -> None:
     logger.debug('init call_random')
 
     buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
@@ -65,4 +66,4 @@ async def call_random(callback: types.CallbackQuery, i18n, event_from_user: type
         **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
     )
     logger.debug(f'{i18n.widget(*count_info_list[1])}{build.as_markup()}')
-    await callback.message.edit_text(text=i18n.widget(*count_info_list[1]), reply_markup=build.as_markup())
+    await callback.message.edit_text(text=i18n.widget(*data_vid.sheet_all[0]), reply_markup=build.as_markup())
