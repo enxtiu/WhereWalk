@@ -17,4 +17,5 @@ def start_data_base(name_base: str, fp: str, users_page: str, function: create_d
 
     function(name_base, fp)
     function(name_base, users_page)
+    logger.info('create table for data base')
 

@@ -2,10 +2,11 @@ import logging
 
 from aiogram import Router, types, F
 
+from app.tg_bot_template.data_base import list_all_table
 from app.tg_bot_template.keyboards.callback_factory import CallbackFactory
 from app.tg_bot_template.keyboards.inline_key import inline_keyboard
-from app.tg_bot_template.services.servis import count_info_list
 from app.tg_bot_template.configs.config import DataVid
+from app.tg_bot_template.data_base.orm import insert_data_base, delete_data_base_filed
 logger = logging.getLogger(__name__)
 
 router: Router = Router()
@@ -42,6 +43,7 @@ async def call_requests_detailed_filter(callback: types.CallbackQuery, event_fro
         )
         await callback.answer(text=i18n.LEXICON['exp_buttons'], show_alert=True)
 
+
 @router.callback_query(CallbackFactory.filter('requests_filter' == F.data_call))
 async def call_requests_filter(callback: types.CallbackQuery, i18n, event_from_user: types.User) -> None:
     if callback.message.text != 'Фильтрации по виду заведения':
@@ -65,8 +67,10 @@ async def call_requests_filter(callback: types.CallbackQuery, i18n, event_from_u
         await callback.answer(text=i18n.LEXICON['exp_buttons'], show_alert=True)
 
 @router.callback_query(CallbackFactory.filter('cancel' == F.data_call))
-async def call_cancel(callback: types.CallbackQuery, i18n, event_from_user: types.User):
+async def call_cancel(callback: types.CallbackQuery, i18n, event_from_user: types.User, delete_base: delete_data_base_filed):
     if callback.message.text != 'Вернуться':
+
+        delete_base('base', 'users_page', if_= f" WHERE user_id = {event_from_user.id}")
         await call_next(callback, i18n, event_from_user)
     else:
         logger.warning(
@@ -74,32 +78,139 @@ async def call_cancel(callback: types.CallbackQuery, i18n, event_from_user: type
         )
         await callback.answer(text=i18n.LEXICON['exp_buttons'], show_alert=True)
 
+
 @router.callback_query(CallbackFactory.filter('random' == F.data_call))
-async def call_random(callback: types.CallbackQuery, i18n, event_from_user: types.User, data_vid: DataVid) -> None:
+async def call_random(
+        callback: types.CallbackQuery,
+        i18n,
+        event_from_user: types.User,
+        data_vid: DataVid,
+        insert_base: insert_data_base
+) -> None:
     logger.debug('init call_random')
 
+    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    logger.debug(f'{list_all_table('base', '*', 'users_page')}')
+
     buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
-
-
     build = inline_keyboard(
         event_from_user,
-        (3,),
+        (3, 1, 1),
         **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
     )
-    logger.debug(f'{i18n.widget(*count_info_list[1])}{build.as_markup()}')
-    await callback.message.edit_text(text=i18n.widget(*data_vid.sheet_all[0]), reply_markup=build.as_markup())
+    await callback.message.edit_text(text=i18n.widget(*list(data_vid.sheet_all)[0]), reply_markup=build.as_markup())
 
-@router.callback_query()
-async def call_whe(): ...
 
-@router.callback_query()
-async def call_prod(): ...
+@router.callback_query(CallbackFactory.filter('ch_food' == F.data_call))
+async def call_whe(
+        callback: types.CallbackQuery,
+        i18n,
+        event_from_user: types.User,
+        data_vid: DataVid,
+        insert_base: insert_data_base
+) -> None:
+    logger.debug('init_call_whe')
 
-@router.callback_query()
-async def call_apt(): ...
+    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    logger.debug(f'{list_all_table('base', '*', 'users_page')}')
 
-@router.callback_query()
-async def call_con(): ...
+    buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
+    build = inline_keyboard(
+        event_from_user,
+        (3, 1, 1),
+        **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
+    )
 
-@router.callback_query()
-async def call_gost(): ...
+    await callback.message.edit_text(text=i18n.widget(*list(data_vid.sheet_whe)[0]), reply_markup=build.as_markup())
+
+
+
+@router.callback_query(CallbackFactory.filter('sail' == F.data_call))
+async def call_prod(
+        callback: types.CallbackQuery,
+        i18n,
+        event_from_user: types.User,
+        data_vid: DataVid,
+        insert_base: insert_data_base
+) -> None:
+    logger.debug('init_call_prod')
+
+    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    logger.debug(f'{list_all_table('base', '*', 'users_page')}')
+
+    buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
+    build = inline_keyboard(
+        event_from_user,
+        (3, 1, 1),
+        **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
+    )
+
+    await callback.message.edit_text(text=i18n.widget(*list(data_vid.sheet_prod)[0]), reply_markup=build.as_markup())
+
+
+@router.callback_query(CallbackFactory.filter('apt' == F.data_call))
+async def call_apt(
+        callback: types.CallbackQuery,
+        i18n,
+        event_from_user: types.User,
+        data_vid: DataVid,
+        insert_base: insert_data_base
+) -> None:
+    logger.debug('init_call_apt')
+
+    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    logger.debug(f'{list_all_table('base', '*', 'users_page')}')
+
+    buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
+    build = inline_keyboard(
+        event_from_user,
+        (3, 1, 1),
+        **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
+    )
+
+    await callback.message.edit_text(text=i18n.widget(*list(data_vid.sheet_apt)[0]), reply_markup=build.as_markup())
+
+
+@router.callback_query(CallbackFactory.filter('con' == F.data_call))
+async def call_con(
+        callback: types.CallbackQuery,
+        i18n,
+        event_from_user: types.User,
+        data_vid: DataVid,
+        insert_base: insert_data_base
+) -> None:
+    logger.debug('init_call_con')
+
+    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    logger.debug(f'{list_all_table('base', '*', 'users_page')}')
+
+    buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
+    build = inline_keyboard(
+        event_from_user,
+        (3, 1, 1),
+        **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
+    )
+
+    await callback.message.edit_text(text=i18n.widget(*list(data_vid.sheet_con)[0]), reply_markup=build.as_markup())
+
+@router.callback_query(CallbackFactory.filter('gost' == F.data_call))
+async def call_gost(
+        callback: types.CallbackQuery,
+        i18n,
+        event_from_user: types.User,
+        data_vid: DataVid,
+        insert_base: insert_data_base
+) -> None:
+    logger.debug('init_call_gost')
+
+    insert_base('base', "users_page (user_id, page) VALUES (?, ?)", int(event_from_user.id), 1)
+    logger.debug(f'{list_all_table('base', '*', 'users_page')}')
+
+    buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
+    build = inline_keyboard(
+        event_from_user,
+        (3, 1, 1),
+        **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
+    )
+
+    await callback.message.edit_text(text=i18n.widget(*list(data_vid.sheet_gost)[0]), reply_markup=build.as_markup())

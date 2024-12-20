@@ -4,7 +4,7 @@ import sqlite3, logging, os
 logger = logging.getLogger(__name__)
 
 def list_all_table(name_db: str, name_line: str, name_table: str, if_: str='') -> list[tuple[str, str]]:
-    if os.path.exists(f'app/tg_bot_template/data_base/{name_db}.db'):
+    if os.path.exists(f'{name_db}.db'):
 
         try:
 
@@ -32,4 +32,4 @@ user_id INTEGER
 users_page = """IF NOT EXISTS users_page (
 user_id INTEGER NOT NULL UNIQUE,
 page INTEGER NOT NULL UNIQUE
-    """
+)"""
