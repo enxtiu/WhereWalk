@@ -21,9 +21,9 @@ def load_config() -> Config:
     load_dotenv(find_dotenv())
 
     from app.tg_bot_template.data_base.engin import start_data_base, create_data_base
-    from app.tg_bot_template.data_base.model import places, favourites_places, users_page
+    from app.tg_bot_template.data_base.model import favourites_places, users_page
 
-    start_data_base('base', favourites_places, places, users_page, create_data_base)
+    start_data_base('base', favourites_places, users_page, create_data_base)
 
     logger.info('return config')
     return Config(tg_bot=TgBot(token=os.getenv('TOKEN')))

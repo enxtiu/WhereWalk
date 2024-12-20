@@ -3,14 +3,14 @@ import sqlite3, logging, os
 
 logger = logging.getLogger(__name__)
 
-def list_all_table(name_db: str, name_table: str, if_: str='') -> list[tuple[str, str]]:
+def list_all_table(name_db: str, name_line: str, name_table: str, if_: str='') -> list[tuple[str, str]]:
     if os.path.exists(f'app/tg_bot_template/data_base/{name_db}.db'):
 
         try:
 
             with sqlite3.connect(f'{name_db}.db') as connection:
                 cursor = connection.cursor()
-                cursor.execute(f'SELECT * FROM {name_table}{if_}')
+                cursor.execute(f'SELECT {name_line} FROM {name_table}{if_}')
                 connection.commit()
                 return cursor.fetchall()
 
@@ -29,13 +29,7 @@ info TEXT NOT NULL UNIQUE,
 user_id INTEGER
 )"""
 
-places = """IF NOT EXISTS places (
-photo TEXT NOT NULL UNIQUE,
-info TEXT NOT NULL UNIQUE,
-type_place TEXT
-)"""
-
 users_page = """IF NOT EXISTS users_page (
 user_id INTEGER NOT NULL UNIQUE,
-page INTEGER NOT NULL
+page INTEGER NOT NULL UNIQUE
     """

@@ -13,8 +13,7 @@ def create_data_base(name: str, table: str) -> None:
         logger.critical(f'EXCEPTION: {e}')
 
 
-def start_data_base(name_base: str, fp: str, p: str, users_page: str, function: create_data_base) -> None:
+def start_data_base(name_base: str, fp: str, users_page: str, function: create_data_base) -> None:
 
     function(name_base, fp)
-    function(name_base, p)
     function(name_base, users_page)
