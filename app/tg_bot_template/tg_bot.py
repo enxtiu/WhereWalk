@@ -19,7 +19,7 @@ async def main() -> None:
     bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
 
-    dp.workflow_data.update(_translation=config.translation.values)
+    dp.workflow_data.update(_translation=config.translation.values, data_vid=config.data_vid)
 
     await set_command(bot)
     logger.info('register my command')
