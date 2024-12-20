@@ -30,3 +30,4 @@ def load_config() -> Config:
 
 if __name__ == '__main__':
     print(load_config())
+
