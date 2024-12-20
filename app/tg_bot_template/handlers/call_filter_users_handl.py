@@ -65,4 +65,5 @@ async def call_random(callback: types.CallbackQuery, i18n, event_from_user: type
         (3,),
         **{k: i18n.LEXICON.get('keyboard').get('pagination')[k] for k in buttons}
     )
+    logger.debug(f'{i18n.widget(*count_info_list[1])}{build.as_markup()}')
     await callback.message.edit_text(text=i18n.widget(*data_vid.sheet_all[0]), reply_markup=build.as_markup())
