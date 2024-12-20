@@ -34,8 +34,12 @@ def load_config() -> Config:
 
     import os
     from dotenv import load_dotenv, find_dotenv
-
     load_dotenv(find_dotenv())
+
+    from app.tg_bot_template.data_base.engin import create_data_base, start_data_base
+    from app.tg_bot_template.data_base.model import users_page, favourites_places
+
+    start_data_base('base', favourites_places, users_page, create_data_base)
     translations = {
         'default': 'ru',
         'ru': lexicon_ru,
