@@ -25,20 +25,6 @@ async def call_next_pag(
 ) -> None:
     logger.debug('init call_next_pag')
     try:
-        test = list(data_vid.sheet_apt)[int(flag)+ 1]
-    except Exception as e:
-        logger.debug(f'{e}')
-        await callback.answer(text=i18n.LEXICON['not_next'], show_alert=True)
-    else:
-        logger.debug(f'not except')
-        update_base(
-            'base',
-            'users_page',
-            'page',
-            'page + 1',
-            if_=f" WHERE user_id = {event_from_user.id}"
-        )
-
         buttons = list(i18n.LEXICON.get('keyboard').get('pagination'))
         build = inline_keyboard(
             event_from_user,
@@ -74,6 +60,19 @@ async def call_next_pag(
                 await callback.message.edit_text(
                     text=i18n.widget(*list(data_vid.sheet_con)[int(flag) + 1]),
                     reply_markup=build.as_markup())
+    except Exception as e:
+        logger.debug(f'{e}')
+        await callback.answer(text=i18n.LEXICON['not_next'], show_alert=True)
+
+    else:
+        logger.debug(f'not except')
+        update_base(
+            'base',
+            'users_page',
+            'page',
+            'page + 1',
+            if_=f" WHERE user_id = {event_from_user.id}"
+        )
 
 
 

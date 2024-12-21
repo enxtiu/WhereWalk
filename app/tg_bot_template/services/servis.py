@@ -36,4 +36,14 @@ def find_category(function, user) -> str:
             logger.debug(f'{i, i[2]}')
             return i[2]
 
+def find_page(function, user) -> int:
+    all_table = function(
+        'base',
+        '*',
+        'users_page',
+    )
 
+    logger.debug(f'{all_table}')
+    for i in all_table:
+        if i[0] == user.id:
+            return i[1]

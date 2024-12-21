@@ -14,7 +14,7 @@ def inline_keyboard(user: User, sizes: tuple[int, ...] = (1,), **kwargs: str) ->
         build.button(
             text=value,
             callback_data=CallbackFactory(
-                user_id=user.id,
+                user_id=str(user.id),
                 data_call=key,
             ).pack()
         )

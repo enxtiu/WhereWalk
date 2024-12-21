@@ -44,3 +44,20 @@ class FilterFlag(filters.BaseFilter):
         else:
             return False
         return False
+
+class FilterUsersFavorites(filters.BaseFilter):
+
+    async def __call__(self, callback: types.CallbackQuery) -> bool | dict[str, bool]:
+        all_table = list_all_table(
+            'base',
+            '*',
+            'favourites_places',
+        )
+
+        if all_table:
+            for i in all_table:
+                if i[2] == callback.from_user.id:
+                    return {'flag': True}
+        else:
+            return {'flag': False}
+        return {'flag': False}

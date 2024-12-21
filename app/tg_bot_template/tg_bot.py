@@ -5,7 +5,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from app.tg_bot_template.configs.config import load_config, Config
-from app.tg_bot_template.handlers import users_handl, echo_handl, call_filter_users_handl, call_paginator_users_handl
+from app.tg_bot_template.handlers import users_handl, echo_handl, call_filter_users_handl, call_paginator_users_handl, call_favorites_places
 from app.tg_bot_template.keyboards.set_menu import set_command
 from app.tg_bot_template.middlewares.category import InfoCategory
 from app.tg_bot_template.middlewares.i18n import TranslatorMiddleware
@@ -37,6 +37,7 @@ async def main() -> None:
     dp.include_router(users_handl.router)
     dp.include_router(call_filter_users_handl.router)
     dp.include_router(call_paginator_users_handl.router)
+    dp.include_router(call_favorites_places.router)
     dp.include_router(echo_handl.router)
 
     dp.update.middleware(TranslatorMiddleware())
